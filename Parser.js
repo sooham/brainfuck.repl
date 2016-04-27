@@ -16,6 +16,11 @@ var get_loop_body = function(source) {
     }
 }
 
+// TODO: Bind arguments to the action functions
+/*
+ * Iterates over the source code and returns an array
+ * of action objects.
+ */
 var translate = function(source) {
     var actions = [];
     var instruction_pointer = 0;
@@ -40,6 +45,7 @@ var translate = function(source) {
                 break;
             case ',':
                 action.func = input_memory;
+                // TODO: pass in input from user interface
                 action.args = [];
                 break;
             case '[':

@@ -40,9 +40,19 @@ var input_memory = function(char) {
 }
 
 
-// TODO: make a steps first
-// alters the RuntimeEnvironment according to the
-// function func with its appropriate environment
-RuntimeEnvironment.prototype.execute(steps) {
-    // TODO:
+/* Executes actions in RuntimeEnvironment until
+ * program finishes execution, or number of steps are
+ * exceeded. (1000) for now.
+ */
+RuntimeEnvironment.prototype.execute(actions) {
+    for (var i = 0; i < actions.length && this.steps < 1000; i++) {
+        var action = actions[i];
+        if (action.type === "statement") {
+            action.func.apply(this, actions.args);
+        } else {
+            while (this.memory[this.mem_ptr] && this.steps < 1000) {
+                this.execute(action.actions);
+            }
+        }
+    }
 }
