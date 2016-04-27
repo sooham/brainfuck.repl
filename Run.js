@@ -1,6 +1,7 @@
 "use strict";
 // The program environment
 
+// TODO:
 // an optimized runtime flag
 var optimized = false;
 
@@ -15,7 +16,6 @@ var RuntimeEnvironment = function() {
     this.steps = 0;
 }
 
-// TODO: call these in execute with this given
 // update the memory_pointer
 var update_memory = function(count) {
     this.memory[this.mem_ptr] += count;
@@ -44,11 +44,11 @@ var input_memory = function(char) {
  * program finishes execution, or number of steps are
  * exceeded. (1000) for now.
  */
-RuntimeEnvironment.prototype.execute(actions) {
+RuntimeEnvironment.prototype.execute = function(actions) {
     for (var i = 0; i < actions.length && this.steps < 1000; i++) {
         var action = actions[i];
         if (action.type === "statement") {
-            action.func.apply(this, actions.args);
+            action.func.apply(this, action.args);
         } else {
             while (this.memory[this.mem_ptr] && this.steps < 1000) {
                 this.execute(action.actions);
